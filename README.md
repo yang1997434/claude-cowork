@@ -59,7 +59,7 @@ The guided setup will:
 1. Verify GitHub connectivity
 2. Create a private sync repository
 3. Register your device (auto-detects serial number)
-4. Configure auto-remind hooks
+4. Configure auto-sync hooks
 
 Then push your current state:
 
@@ -121,9 +121,9 @@ Every push creates a snapshot. The 3 most recent snapshots are kept (configurabl
 
 Observations are deduplicated by `content_hash`, sessions by `memory_session_id`, and summaries by `memory_session_id + prompt_number`. No data is lost or duplicated.
 
-### Auto-Remind
+### Auto-Sync
 
-On session start, claude-cowork checks for remote changes and reminds you to pull if your other device has pushed updates.
+On session start, claude-cowork checks for remote changes. If another device has pushed updates, it automatically pulls and applies them — no manual action needed. A macOS notification confirms the sync.
 
 ## Configuration
 

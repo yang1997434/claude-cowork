@@ -59,7 +59,7 @@ gh auth login  # 连接 GitHub 账号
 1. 检查 GitHub 连接状态
 2. 创建私有同步仓库
 3. 注册设备（自动获取序列号）
-4. 配置自动提醒
+4. 配置自动同步
 
 然后推送当前状态：
 
@@ -121,9 +121,9 @@ gh auth login  # 连接 GitHub 账号
 
 observations 按 `content_hash` 去重，sessions 按 `memory_session_id` 去重，summaries 按 `memory_session_id + prompt_number` 去重。不会丢失或重复数据。
 
-### 自动提醒
+### 自动同步
 
-打开 Claude Code 时，自动检查远程是否有新变更，如果另一台设备推送了更新，会提醒你拉取。
+打开 Claude Code 时，自动检查远程是否有新变更。如果另一台设备推送了更新，会自动拉取并应用，无需手动操作。同步完成后会弹出 macOS 通知。
 
 ## 配置
 
