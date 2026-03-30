@@ -1,0 +1,17 @@
+{
+  "description": "claude-cowork cross-device sync hooks",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_R=\"${CLAUDE_PLUGIN_ROOT}\"; [ -z \"$_R\" ] && _R=\"$HOME/.claude/plugins/marketplaces/claude-cowork/plugin\"; bash \"$_R/scripts/cowork.sh\" check-remote",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

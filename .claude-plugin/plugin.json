@@ -1,0 +1,17 @@
+{
+  "name": "claude-cowork",
+  "version": "0.1.0",
+  "description": "Cross-device Claude Code sync — push/pull configs, plugins, memory across machines",
+  "author": {
+    "name": "Maruiao"
+  },
+  "repository": "https://github.com/yang1997434/claude-cowork",
+  "license": "MIT",
+  "keywords": [
+    "sync",
+    "cross-device",
+    "collaboration",
+    "memory",
+    "config"
+  ]
+}
