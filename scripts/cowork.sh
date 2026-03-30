@@ -317,6 +317,8 @@ generate_plugin_manifest() {
       [[ -d "$pdir" ]] || continue
       local pname
       pname=$(basename "$pdir")
+      # Skip temporary worktree plugin directories
+      [[ "$pname" == temp_git_* ]] && continue
       # Find plugin.json for version info
       local pjson
       pjson=$(find "$pdir" -name "plugin.json" -path "*/.claude-plugin/*" -print -quit 2>/dev/null)
