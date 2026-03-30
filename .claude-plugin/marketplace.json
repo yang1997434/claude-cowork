@@ -1,0 +1,16 @@
+{
+  "name": "claude-cowork",
+  "description": "Cross-device Claude Code sync — push/pull configs, plugins, and memory across machines",
+  "owner": {
+    "name": "Maruiao",
+    "url": "https://github.com/yang1997434"
+  },
+  "plugins": [
+    {
+      "name": "claude-cowork",
+      "description": "Cross-device Claude Code sync — push/pull configs, plugins, and memory across machines",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}

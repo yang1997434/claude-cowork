@@ -37,10 +37,14 @@ gh auth login  # 连接 GitHub 账号
 
 ### 安装插件
 
-在 Claude Code 中运行：
+在 Claude Code 中依次运行：
 
-```
-/install-plugin https://github.com/yang1997434/claude-cowork
+```bash
+# 第 1 步：添加插件源
+/plugin marketplace add yang1997434/claude-cowork
+
+# 第 2 步：安装插件
+/plugin install claude-cowork@claude-cowork
 ```
 
 ## 快速开始
