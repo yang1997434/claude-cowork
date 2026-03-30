@@ -1001,7 +1001,9 @@ cmd_check_remote() {
 
     # Auto pull
     cmd_pull 2>/dev/null
-    echo "claude-cowork: auto-synced ${behind} update(s) from ${device_info}"
+
+    # macOS notification
+    osascript -e "display notification \"Synced ${behind} update(s) from ${device_info}\" with title \"Claude Cowork\"" 2>/dev/null || true
   fi
 }
 
