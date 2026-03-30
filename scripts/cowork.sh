@@ -982,26 +982,26 @@ cmd_devices() {
 # Command: check-remote (for auto-remind hook)
 # ============================================================================
 cmd_check_remote() {
-  # Silent check — only output if there are remote changes
+  # Auto-sync: if remote has updates, pull automatically
   [[ -f "$SYNC_CONFIG" ]] || exit 0
   [[ -d "$SYNC_REPO_DIR/.git" ]] || exit 0
 
   cd "$SYNC_REPO_DIR"
-  git fetch origin --quiet 2>/dev/null || exit 0
+  sync_git fetch origin --quiet 2>/dev/null || exit 0
 
   local local_head remote_head
-  local_head=$(git rev-parse HEAD 2>/dev/null || echo "none")
-  remote_head=$(git rev-parse origin/main 2>/dev/null || echo "none")
+  local_head=$(sync_git rev-parse HEAD 2>/dev/null || echo "none")
+  remote_head=$(sync_git rev-parse origin/main 2>/dev/null || echo "none")
 
   if [[ "$local_head" != "$remote_head" ]] && \
-     git merge-base --is-ancestor "$local_head" "$remote_head" 2>/dev/null; then
+     sync_git merge-base --is-ancestor "$local_head" "$remote_head" 2>/dev/null; then
     local behind device_info
-    behind=$(git rev-list --count HEAD..origin/main)
+    behind=$(sync_git rev-list --count HEAD..origin/main)
+    device_info=$(sync_git log origin/main -1 --pretty=format:"%s" 2>/dev/null | sed 's/sync: //' | cut -d@ -f1 | xargs)
 
-    # Find which device pushed last
-    device_info=$(git log origin/main -1 --pretty=format:"%s" 2>/dev/null | sed 's/sync: //' | cut -d@ -f1 | xargs)
-
-    echo "claude-cowork: ${behind} new sync(s) from ${device_info}— run /sync pull"
+    # Auto pull
+    cmd_pull 2>/dev/null
+    echo "claude-cowork: auto-synced ${behind} update(s) from ${device_info}"
   fi
 }
 
