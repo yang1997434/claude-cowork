@@ -37,10 +37,10 @@ gh auth login  # Authenticate with GitHub
 
 ### Install Plugin
 
-Add to your Claude Code settings or install via marketplace:
+In Claude Code, run:
 
 ```
-claude-cowork
+/install-plugin https://github.com/yang1997434/claude-cowork
 ```
 
 ## Quick Start

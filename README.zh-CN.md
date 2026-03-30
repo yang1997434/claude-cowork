@@ -37,10 +37,10 @@ gh auth login  # 连接 GitHub 账号
 
 ### 安装插件
 
-通过 Claude Code 插件市场安装或手动添加：
+在 Claude Code 中运行：
 
 ```
-claude-cowork
+/install-plugin https://github.com/yang1997434/claude-cowork
 ```
 
 ## 快速开始
