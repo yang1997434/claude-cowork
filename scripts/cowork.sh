@@ -246,6 +246,17 @@ cmd_push() {
   sync_git commit -m "sync: $device_name @ $timestamp"
   sync_git push
 
+  # Periodic git gc: run every 20 pushes to control repo bloat
+  local gc_counter_file="$SYNC_DIR/.gc-counter"
+  local gc_count=0
+  [[ -f "$gc_counter_file" ]] && gc_count=$(cat "$gc_counter_file")
+  gc_count=$((gc_count + 1))
+  if [[ $gc_count -ge 20 ]]; then
+    sync_git gc --aggressive --prune=now --quiet 2>/dev/null && log_info "Git gc: repo compacted"
+    gc_count=0
+  fi
+  echo "$gc_count" > "$gc_counter_file"
+
   # Update last_sync in devices.json
   update_last_sync "$device_name"
 
