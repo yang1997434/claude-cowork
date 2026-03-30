@@ -968,21 +968,6 @@ cmd_check_remote() {
   [[ -f "$SYNC_CONFIG" ]] || exit 0
   [[ -d "$SYNC_REPO_DIR/.git" ]] || exit 0
 
-  # Rate limit: check at most once per hour
-  local check_file="$SYNC_DIR/.last-remote-check"
-  local interval=3600
-
-  if [[ -f "$check_file" ]]; then
-    local last now
-    last=$(cat "$check_file")
-    now=$(now_ts)
-    if [[ $((now - last)) -lt $interval ]]; then
-      exit 0
-    fi
-  fi
-
-  now_ts > "$check_file"
-
   cd "$SYNC_REPO_DIR"
   git fetch origin --quiet 2>/dev/null || exit 0
 
