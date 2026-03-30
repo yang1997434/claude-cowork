@@ -232,6 +232,9 @@ cmd_push() {
   log_step "Creating history snapshot..."
   create_snapshot "$device_name" "$timestamp"
 
+  # Update last_sync before commit so it's included in the same push
+  update_last_sync_local "$device_name"
+
   cd "$SYNC_REPO_DIR"
   sync_git add -A
 
@@ -256,9 +259,6 @@ cmd_push() {
     gc_count=0
   fi
   echo "$gc_count" > "$gc_counter_file"
-
-  # Update last_sync in devices.json
-  update_last_sync "$device_name"
 
   echo ""
   log_ok "Push complete ($device_name → remote)"
@@ -467,7 +467,8 @@ create_snapshot() {
   fi
 }
 
-update_last_sync() {
+# Update last_sync in devices.json (file only, no commit/push)
+update_last_sync_local() {
   local device_name="$1"
   local devices_file="$SYNC_REPO_DIR/devices.json"
   local now
@@ -479,12 +480,16 @@ update_last_sync() {
     jq --arg id "$device_id" --arg ts "$now" \
       '.[$id].last_sync = $ts' "$devices_file" > "$devices_file.tmp"
     mv "$devices_file.tmp" "$devices_file"
-
-    cd "$SYNC_REPO_DIR"
-    sync_git add devices.json
-    sync_git commit -m "sync: update last_sync for $device_name" --allow-empty 2>/dev/null || true
-    sync_git push 2>/dev/null || true
   fi
+}
+
+# Update last_sync and commit+push (used by pull)
+update_last_sync() {
+  update_last_sync_local "$1"
+  cd "$SYNC_REPO_DIR"
+  sync_git add devices.json
+  sync_git commit -m "sync: update last_sync for $1" --allow-empty 2>/dev/null || true
+  sync_git push 2>/dev/null || true
 }
 
 # ============================================================================
